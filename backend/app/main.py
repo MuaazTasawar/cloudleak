@@ -1,9 +1,8 @@
 ﻿"""
 CloudLeak FastAPI application entrypoint.
 
-Serves the dashboard API consumed by the Next.js frontend. In this phase
-only the app skeleton, CORS, and a health check exist — the spend and
-resources routers are wired in during Phase 5.
+Serves the dashboard API consumed by the Next.js frontend. Wires in the
+spend and resources routers on top of the base app skeleton from Phase 1.
 """
 
 import logging
@@ -12,6 +11,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
+from app.routers import resources, spend
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("cloudleak")
@@ -29,6 +29,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(spend.router)
+app.include_router(resources.router)
 
 
 @app.get("/health")
