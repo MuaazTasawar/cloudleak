@@ -1,4 +1,4 @@
-"""
+﻿"""
 Centralized application configuration for CloudLeak.
 
 Loads settings from environment variables (via a local .env file in
